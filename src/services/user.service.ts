@@ -40,6 +40,7 @@ export async function updateUserFromDb(
   try {
     return await UserModel.findByIdAndUpdate(id, input, {
       useFindAndModify: false,
+      new: true,
     });
   } catch (error) {
     throw new Error(error);
