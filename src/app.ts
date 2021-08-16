@@ -4,7 +4,7 @@ import config from "./config/config";
 import router from "./routes/users";
 
 const app = express();
-
+app.use(express.static("uploads/"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

@@ -22,8 +22,6 @@ export const createUser = async (req: Request, res: Response) => {
   const user = req.body;
   try {
     const newUser = await createUserFromDb(user);
-    //create avatar
-    // response with avatar
     return res.status(201).send({ data: newUser });
   } catch (error) {
     errorResponse(res, error);
