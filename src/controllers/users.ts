@@ -1,4 +1,6 @@
+import { IUser } from "db/User.model";
 import { Request, Response } from "express";
+
 import {
   createUserFromDb,
   getUsersFromDb,
@@ -6,6 +8,7 @@ import {
   deleteUserFromDb,
   updateUserFromDb,
 } from "../services/user.service";
+import { deleteUserAvatar } from "./deleteUserAvatar";
 import { errorResponse } from "./errorResponse";
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -19,10 +22,16 @@ export const getAllUsers = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const user = req.body;
+  const user: IUser = req.body;
+  const id = res.locals.id;
+  user.id = id;
+  const avatar = res.locals.imgSrc;
+  user.avatar = avatar;
   try {
     const newUser = await createUserFromDb(user);
-    return res.status(201).send({ data: newUser });
+    const newUserWithout_id = { ...JSON.parse(JSON.stringify(newUser)) };
+    delete newUserWithout_id["_id"];
+    return res.status(201).send({ data: newUserWithout_id });
   } catch (error) {
     errorResponse(res, error);
   }
@@ -52,7 +61,8 @@ export const deleteUser = async (req: Request, res: Response) => {
       return res.status(404).send({ error: error });
     }
     //delete avatar
-    return res.status(200).send({ data: { deletedUser: user } });
+    await deleteUserAvatar(user, res);
+    return res.status(200).send({ data: `User with id=${id} deleted` });
   } catch (error) {
     errorResponse(res, error);
   }
@@ -68,7 +78,6 @@ export const updateUser = async (req: Request, res: Response) => {
       return res.status(404).send({ error: error });
     }
     //create avatar
-    // response with avatar
     return res.status(200).send({ data: updatedUser });
   } catch (error) {
     errorResponse(res, error);

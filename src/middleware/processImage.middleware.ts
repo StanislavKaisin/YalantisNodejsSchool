@@ -28,6 +28,10 @@ export const processImage = async function (
       .jpeg()
       .toFile(path.resolve(req.file.destination, `${filename}.jpg`));
     await fs.unlinkSync(req.file.path);
+    res.locals = {
+      id: filename,
+      imgSrc: `uploads/${filename}.jpg`,
+    };
   } catch (error) {
     return res.status(500).send({ error: error.errors });
   }

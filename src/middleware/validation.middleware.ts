@@ -10,7 +10,6 @@ const validateRequest =
         query: req.query,
         params: req.params,
       });
-      res.locals.msg = "yes";
       return next();
     } catch (error) {
       return res.status(400).send({ error: error.errors });
