@@ -1,10 +1,3 @@
-import {
-  createUser,
-  deleteUser,
-  getAllUsers,
-  getUser,
-  updateUser,
-} from "../controllers/users";
 import express from "express";
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -14,6 +7,13 @@ import {
 } from "../middleware/userValidationSchema";
 import validateRequest from "../middleware/validation.middleware";
 import { processImage } from "../middleware/processImage.middleware";
+import {
+  createUser,
+  deleteUser,
+  getAllUsers,
+  getUser,
+  updateUser,
+} from "../controllers/users";
 
 const router = express.Router();
 
