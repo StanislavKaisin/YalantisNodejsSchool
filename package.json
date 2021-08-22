@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "build": "rm -rf build/ && prettier --write/ && tsc",
+    "build": "rm -rf build/ && tsc",
     "dev": "ts-node-dev --respawn --transpile-only --watch src/ src/app.ts",
     "start": "node ."
   },

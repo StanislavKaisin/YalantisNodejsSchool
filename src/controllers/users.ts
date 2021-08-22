@@ -60,7 +60,7 @@ export const deleteUser = async (req: Request, res: Response) => {
       return res.status(404).send({ error: error });
     }
     //delete avatar
-    await deleteUserAvatar(user, res);
+    await deleteUserAvatar(user);
     return res.status(200).send({ data: `User with id=${id} deleted` });
   } catch (error) {
     errorResponse(res, error);
